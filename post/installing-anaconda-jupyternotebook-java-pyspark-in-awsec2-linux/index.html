@@ -304,10 +304,9 @@ Click on the <strong>instance Id</strong> to navigate to instance which is launc
 Then in source select <strong>My IP</strong> for <strong>TCP and Port 8888</strong> and also for <strong>TCP and port 22</strong>.
 <figure>
   <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image7.png">
-</figure></p></li>
+</figure>
+Navigate back to instances and to the newly launched instance.</p></li>
 </ul>
-
-<p>Navigate back to instances and to the newly launched instance.</p>
 
 <h2 id="step-3-ssh-into-the-instance-connect-the-device-terminal-to-the-aws-terminal">Step 3) SSH into the instance (Connect the device terminal to the AWS terminal)</h2>
 
@@ -323,14 +322,12 @@ Then in source select <strong>My IP</strong> for <strong>TCP and Port 8888</stro
 
 <p><figure>
       <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image8.png">
-  </figure></p>
-
-<p>Once you execute the SSH command, you’ll be prompted with a yes/no question. Type yes and you should be SSH-ed into your instance! (see screenshot below).
+  </figure>
+Once you execute the SSH command, you’ll be prompted with a yes/no question. Type yes and you should be SSH-ed into your instance! (see screenshot below).
   <figure>
       <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image9.png">
-  </figure></p>
-
-<p>Congratulation you have now successfully create a Linux AWS EC2 instance.
+  </figure>
+Congratulation you have now successfully create a Linux AWS EC2 instance.
 Now  run the following command to update the OS libraries</p>
 
 <pre><code>sudo yum update
@@ -381,9 +378,8 @@ Use the following commands:</p>
 
 <p><figure>
       <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image10.png">
-  </figure></p>
-
-<p>Now if you type</p>
+  </figure>
+Now if you type</p>
 
 <pre><code>python
 </code></pre>
@@ -505,20 +501,17 @@ c.NotebookApp.port = 8888
 </code></pre>
 
 <p><strong>E.g : <a href="https://ec2-54-144-47-199.compute-1.amazonaws.com:8888/">https://ec2-54-144-47-199.compute-1.amazonaws.com:8888/</a></strong>
-Then click on <strong>Proceed</strong> to Show Advanced Security and then click on the <strong>link</strong> at the bottom.</p>
-
-<p>Press ESC and then type :wq
+Then click on <strong>Proceed</strong> to Show Advanced Security and then click on the <strong>link</strong> at the bottom.
+Press ESC and then type <strong>:wq</strong>
 It should look something like this
   <figure>
       <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image15.png">
-  </figure></p>
-
-<p>Next you’ll see the password protection screen for Jupyter. Just type in the actual password you chose in Step 9 (not the SHA hash)
+  </figure>
+Next you’ll see the password protection screen for Jupyter. Just type in the actual password you chose in Step 9 (not the SHA hash)
   <figure>
       <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image16.png">
-  </figure></p>
-
-<p>Click <strong>Log In</strong> and you’re ready to create and run your own notebooks on Jupyter!</p>
+  </figure>
+Click <strong>Log In</strong> and you’re ready to create and run your own notebooks on Jupyter!</p>
 
 <p>Woohooooo you have successfully installed and launched jupyter notebook</p>
 
