@@ -6,10 +6,19 @@
     <description>Recent content on UnSchooled Coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&amp;copy; 2016. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 14 Feb 2019 23:45:56 -0800</lastBuildDate>
+    <lastBuildDate>Fri, 15 Feb 2019 00:04:30 -0800</lastBuildDate>
     
 	<atom:link href="https://parthpunkster.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>About</title>
+      <link>https://parthpunkster.github.io/about/</link>
+      <pubDate>Fri, 15 Feb 2019 00:04:30 -0800</pubDate>
+      
+      <guid>https://parthpunkster.github.io/about/</guid>
+      <description>I am Parth Jains, student at San Jose State University, California, doing Master of Science in Computer Science with specialization in Artificial Intelligence.I started my master&amp;rsquo;s in August, 2017 and will be graduating by May, 2019. During my master&amp;rsquo;s I was working as Software Developer intern at Trinet Inc. from June, 2018 to August, 2018. Prior to starting my master&amp;rsquo;s, I was working as a Software Developer for Prisms InfoSystem, India from July, 2016 to July, 2017.</description>
+    </item>
     
     <item>
       <title>Installing Anaconda, Jupyter Notebook, Java and PySpark in AWS EC2 Linux Instance</title>
