@@ -320,12 +320,10 @@ Now you can finally launch your EC2 instance by selecting Launch Instance.
 <h2 id="step-3-ssh-into-the-instance-connect-the-device-terminal-to-the-aws-terminal">Step 3) SSH into the instance (Connect the device terminal to the AWS terminal)</h2>
 
 <p>Click on <strong>Connect</strong> and it will open up a dialogue box from that copy the last line
-{{%ssh -i &ldquo;tutorialexample.pem&rdquo; ec2-user@ec2-54-144-47-199.compute-1.amazonaws.com%}}</p>
+ssh -i &ldquo;tutorialexample.pem&rdquo; ec2-user@ec2-54-144-47-199.compute-1.amazonaws.com</p>
 
-<p>This assumes your PEM file is in the same directly as your present working directory (type “pwd” into your terminal if you’re unsure what your present working directory is). Also you’ll need to type in your own user@ec2-instance address. If you’ve been following my steps so far the user is “ec2-user” (this is the default) and the address after “@” is your instance’s Public DNS (IPv4) address which you can view by selecting your instance (see screenshot below). If you get an error that your PEM file is not publicly viewable, you made need to execute this command:</p>
-
-<pre><code>chmod 400 tutorialexample.pem
-</code></pre>
+<p>This assumes your PEM file is in the same directly as your present working directory (type “pwd” into your terminal if you’re unsure what your present working directory is). Also you’ll need to type in your own user@ec2-instance address. If you’ve been following my steps so far the user is “ec2-user” (this is the default) and the address after “@” is your instance’s Public DNS (IPv4) address which you can view by selecting your instance (see screenshot below). If you get an error that your PEM file is not publicly viewable, you made need to execute this command:
+chmod 400 tutorialexample.pem</p>
 
 
   
