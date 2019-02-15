@@ -36,7 +36,7 @@
       
       <guid>https://parthpunkster.github.io/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/</guid>
       <description>This article is for installing anaconda, jupyter notebook java, pyspark on aws ec2 linux machine with the most basic configuration which is eligible in the free tier account for students. The below configuration is for ubuntu but should work for other OS as well. We assume that you already have an AWS account. If not then create one and then follow the below steps:
-Step 1) Sign-in into your aws account  Goto https://aws.</description>
+Step 1) Sign-in into your aws account  Goto aws.</description>
     </item>
     
   </channel>
