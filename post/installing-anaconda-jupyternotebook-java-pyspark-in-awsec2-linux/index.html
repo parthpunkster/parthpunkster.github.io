@@ -319,13 +319,343 @@ Now you can finally launch your EC2 instance by selecting Launch Instance.
 
 <h2 id="step-3-ssh-into-the-instance-connect-the-device-terminal-to-the-aws-terminal">Step 3) SSH into the instance (Connect the device terminal to the AWS terminal)</h2>
 
-<p>Click on <strong>Connect</strong> and it will open up a dialogue box from that copy the last line
-ssh -i &ldquo;tutorialexample.pem&rdquo; ec2-user@ec2-54-144-47-199.compute-1.amazonaws.com</p>
+<p>Click on <strong>Connect</strong> and it will open up a dialogue box from that copy the last line</p>
+
+<pre><code>ssh -i &quot;tutorialexample.pem&quot; ec2-user@ec2-54-144-47-199.compute-1.amazonaws.com
+</code></pre>
 
 <p>This assumes your PEM file is in the same directly as your present working directory (type “pwd” into your terminal if you’re unsure what your present working directory is). Also you’ll need to type in your own user@ec2-instance address. If you’ve been following my steps so far the user is “ec2-user” (this is the default) and the address after “@” is your instance’s Public DNS (IPv4) address which you can view by selecting your instance (see screenshot below). If you get an error that your PEM file is not publicly viewable, you made need to execute this command:</p>
 
 <pre><code>chmod 400 tutorialexample.pem
 </code></pre>
+
+<p><figure>
+      <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image8.png">
+  </figure></p>
+
+<p>Once you execute the SSH command, you’ll be prompted with a yes/no question. Type yes and you should be SSH-ed into your instance! (see screenshot below).
+  <figure>
+      <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image9.png">
+  </figure></p>
+
+<p>Congratulation you have now successfully create a Linux AWS EC2 instance.
+Now  run the following command to update the OS libraries</p>
+
+<pre><code>sudo yum update
+</code></pre>
+
+<h2 id="step-4-download-and-install-anaconda-and-jupyter-notebook">Step 4) Download and install Anaconda and Jupyter Notebook</h2>
+
+<ul>
+<li><p>Run the following command to download anaconda3, change the name according to the latest anaconda version available.</p>
+
+<pre><code>wget https://repo.continuum.io/archive/Anaconda3-5.3.0-Linux-x86_64.sh
+</code></pre></li>
+
+<li><p>Run the following command to install the downloaded Anaconda3</p>
+
+<pre><code>bash Anaconda3-5.3.0-Linux-x86_64.sh
+</code></pre>
+
+<p>After this there will be a bigger legal terms and condition text, keep <strong>pressing enter</strong>, until it asks you to <strong>enter yes or no</strong> for accepting the terms and condition, type <strong>Yes and press enter</strong>.</p></li>
+</ul>
+
+<p>Now <strong>press enter</strong> to install anaconda to <strong>default location(Preferred)</strong> or <strong>type the location</strong> where you want to install it.</p>
+
+<p>Now it will ask Do you wish the installer to initialize Anaconda3 in your <strong>/home/ec2-user/.bashrc ? [yes|no]</strong>
+Enter <strong>Yes</strong>
+Wait&hellip;Wait&hellip;Wait for installation to finish
+If you typed <strong>yes</strong> then goto <strong>Step 5)</strong></p>
+
+<ul>
+<li>You will have to manually enter the path to <strong>.bashrc</strong> file.
+Run the following commands:
+<code>
+Vim .bashrc
+</code>
+Press <strong>i to edit</strong> the file,
+Paste the following path in <strong>.bashrc</strong> file <strong>export PATH=&ldquo;/home/ec2-user/anaconda3/bin:$PATH&rdquo;</strong>
+Press <strong>esc</strong> and then type <strong>:wq</strong> to save it
+Then type
+<code>
+source .bashrc
+</code></li>
+</ul>
+
+<h2 id="step-5-setting-anaconda3-as-your-default-python-environment">Step 5) Setting Anaconda3 as your default Python environment.</h2>
+
+<p>Currently the default Python environment is set to python 2.7, but we will shift to Anaconda3 for python 3 environment.
+Use the following commands:</p>
+
+<pre><code>which python /usr/bin/python
+</code></pre>
+
+<p>Then type</p>
+
+<pre><code>source .bashrc
+</code></pre>
+
+<p><figure>
+      <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image10.png">
+  </figure></p>
+
+<p>Now if you type</p>
+
+<pre><code>python
+</code></pre>
+
+<p>it will show the new version of Anaconda and Python 3 version
+<strong>Press Ctrl+d or type quit()</strong> to get out of the python REPL</p>
+
+<h2 id="step-6-create-password-for-jupyter-notebook">Step 6) Create Password for jupyter notebook</h2>
+
+<p>Since the notebook is on cloud and can be easily accessed by others and due to security concerns we will create a password for the jupyternotebook.
+To create the password run the following commands:</p>
+
+<pre><code>Ipython
+</code></pre>
+
+<p>Then type</p>
+
+<pre><code>from IPython.lib import passwd
+</code></pre>
+
+<p>Then type</p>
+
+<pre><code>passwd()
+</code></pre>
+
+<p>Now you will be prompted to type and verify the password. After that an <strong>SHA version</strong> is shown save that somewhere as we will require the SHA later on
+It will look something like this
+  <figure>
+      <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image11.png">
+  </figure></p>
+
+<h2 id="step-7-configure-jupyter-server-to-access-the-notebooks-from-your-local-computer-via-internet-browser">Step 7) Configure Jupyter  server to access the notebooks from your local computer via internet browser.</h2>
+
+<p>First we’ll create a default config file by just typing:</p>
+
+<pre><code>jupyter notebook --generate-config
+</code></pre>
+
+<p>Next, we’ll need to generate SSL certificates so our browser will trust our Jupyter Notebooks server, just type:</p>
+
+<pre><code>mkdir certs
+</code></pre>
+
+<p>Then goto the certs directory by typing</p>
+
+<pre><code>cd certs
+</code></pre>
+
+<p>then create your PEM file (this is separate from the PEM file on your local computer which we downloaded from AWS) by typing:</p>
+
+<pre><code>sudo openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mycert.pem -out mycert.pem
+</code></pre>
+
+<p>This certificate is good for one year. You will be prompted to enter in some personal info for your certificate, but you can type in whatever you want. When you’re done, it should look something like this:
+  <figure>
+      <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image12.png">
+  </figure>
+Type the following command to go to home directory</p>
+
+<pre><code>cd
+</code></pre>
+
+<h2 id="step-8-edit-your-jupyter-configuration-file">Step 8) Edit your jupyter configuration file</h2>
+
+<p>Follow the below commands :</p>
+
+<pre><code>vim .jupyter/jupyter_notebook_config.py
+</code></pre>
+
+<p><strong>Press i</strong>
+Paste the code below in the above file</p>
+
+<pre><code>c = get_config()
+
+# Kernel config
+c.IPKernelApp.pylab = 'inline'  # if you want plotting support always in your notebook
+
+# Notebook config
+c.NotebookApp.certfile = u'/home/ec2-user/certs/mycert.pem' #location of your certificate file
+c.NotebookApp.ip = '*'
+c.NotebookApp.open_browser = False  #so that the ipython notebook does not opens up a browser by default
+c.NotebookApp.password = u'sha1:262....your hash here.........65f'  #edit this with the SHA hash that you generated after typing in Step 9
+# This is the port we opened in Step 3.
+c.NotebookApp.port = 8888
+</code></pre>
+
+<p><strong>Insert your own SHA in NotebookApp.password</strong>
+  <figure>
+      <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image13.png">
+  </figure></p>
+
+<h2 id="step-9-create-a-folder-for-your-notebooks-by-typing-the-following-commands">Step 9) Create a folder for your notebooks by typing the following commands</h2>
+
+<pre><code>mkdir Notebooks
+</code></pre>
+
+<p>And then goto the created folder by typing</p>
+
+<pre><code>cd Notebooks
+</code></pre>
+
+<h2 id="step-10-open-jupyter-notebook">Step 10) open jupyter notebook</h2>
+
+<p>Type</p>
+
+<pre><code>jupyter notebook
+</code></pre>
+
+<p>You should see something like this now:
+  <figure>
+      <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image14.png">
+  </figure></p>
+
+<h2 id="step-11-accessing-jupyter-notebook-from-web-broswer">Step 11) Accessing jupyter notebook from web broswer</h2>
+
+<p>Type the following url:</p>
+
+<pre><code>https://(Your AWS machines public DNS over here):8888/
+</code></pre>
+
+<p><strong>E.g : <a href="https://ec2-54-144-47-199.compute-1.amazonaws.com:8888/">https://ec2-54-144-47-199.compute-1.amazonaws.com:8888/</a></strong>
+Then click on <strong>Proceed</strong> to Show Advanced Security and then click on the <strong>link</strong> at the bottom.</p>
+
+<p>Press ESC and then type :wq
+It should look something like this
+  <figure>
+      <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image15.png">
+  </figure></p>
+
+<p>Next you’ll see the password protection screen for Jupyter. Just type in the actual password you chose in Step 9 (not the SHA hash)
+  <figure>
+      <img style="width:100%;" src="https://parthpunkster.github.io/img/post/installing-anaconda-jupyternotebook-java-pyspark-in-awsec2-linux/image16.png">
+  </figure></p>
+
+<p>Click <strong>Log In</strong> and you’re ready to create and run your own notebooks on Jupyter!</p>
+
+<p>Woohooooo you have successfully installed and launched jupyter notebook</p>
+
+<p>Now go to your system terminal and <strong>press ctrl+c</strong> to close the jupyter kernel properly
+Then type the following to go to your home directory
+<code>
+cd
+</code></p>
+
+<h2 id="step-11-install-java">Step 11) Install Java</h2>
+
+<p>The java already installed is java 1.7, we need to upgrade to the latest available version java we will install java 1.8.0, but you can upgrade to more latest version just by changing the version number in the commands below.
+To Install Java Runtime 1.8</p>
+
+<pre><code>sudo yum install java-1.8.0
+</code></pre>
+
+<p>To install java compiler and other developer tools</p>
+
+<pre><code>sudo yum install java-1.8.0-openjdk-devel
+</code></pre>
+
+<p>Then use the alternatives command to make Java 1.8 the default.</p>
+
+<pre><code>sudo /usr/sbin/alternatives --config java
+sudo /usr/sbin/alternatives --config javac
+</code></pre>
+
+<p>Preferred is not to remove java 1.7
+If you prefer you can remove Java 1.7 with</p>
+
+<pre><code>sudo yum remove java-1.7.0-openjdk
+</code></pre>
+
+<p>To recheck whether it has been updated to java 1.8 and above, type the following command</p>
+
+<pre><code>java -version
+</code></pre>
+
+<h2 id="step-12-connecting-pip-to-anaconda-installation">Step 12) Connecting pip to Anaconda installation</h2>
+
+<p>We need to make sure that pip install is connected to our Anaconda installation of Python instead of Ubuntu’s default. In the console we will export the path for pip by typing the following commands:</p>
+
+<pre><code>vim .bashrc
+</code></pre>
+
+<p><strong>Press i</strong>
+Paste this in <strong>.bashrc</strong> file :</p>
+
+<pre><code>export PATH=$PATH:$HOME/anaconda3/bin
+</code></pre>
+
+<p>Press ESC and then type</p>
+
+<pre><code>:wq**
+</code></pre>
+
+<p>Type</p>
+
+<pre><code>source .bashrc
+</code></pre>
+
+<p>Now we will use conda to install pip by typing :</p>
+
+<pre><code>$ conda install pip
+</code></pre>
+
+<p>Confirm that the correct pip is being used with:</p>
+
+<pre><code>$ which pip
+</code></pre>
+
+<h2 id="step-13-installing-py4j-in-conda-environment-using-the-pip-from-the-conda-enviroment">Step 13) Installing py4j in conda environment using the pip from the conda enviroment</h2>
+
+<pre><code>$ pip install py4j
+</code></pre>
+
+<h2 id="step-14-install-spark-and-hadoop">Step 14) Install Spark and Hadoop</h2>
+
+<p>To download spark and hadoop we will type the following command with appropriate and latest version of spark available, we will be using spark-2.3.2-bin-hadoop2.7</p>
+
+<pre><code>$ wget http://archive.apache.org/dist/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz
+</code></pre>
+
+<p>Installing the downloaded spark and hadoop by typing</p>
+
+<pre><code>$ sudo tar -zxvf spark-2.3.2-bin-hadoop2.7.tgz
+</code></pre>
+
+<h2 id="step-15-tell-python-where-to-find-spark">Step 15) Tell Python where to find Spark</h2>
+
+<p>We need to set paths for spark so that python can find the packages.</p>
+
+<pre><code>$ vim .bashrc
+</code></pre>
+
+<p><strong>Press i</strong>
+Paste the following lines based on the path of spark in your computer</p>
+
+<pre><code>export SPARK_HOME='/home/ubuntu/spark-2.3.2-bin-hadoop2.7'
+export PATH=$SPARK_HOME:$PATH
+export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
+</code></pre>
+
+<h2 id="step-16-run-jupyter-notebook-and-check-whether-spark-is-working-or-not">Step 16) Run jupyter notebook and check whether spark is working or not.</h2>
+
+<p>To launch jupyter notebook type :</p>
+
+<pre><code>cd Notebooks
+</code></pre>
+
+<p>Now folllow step 10 and 11.
+Create a new python 3 notebook and paste the following code and run it:</p>
+
+<pre><code>import findspark
+findspark.init()
+Import pyspark
+</code></pre>
+
+<p>If it runs without error then woohhoooooo you have successfully launched an aws ec2 machine using Linux OS and install jupyter notebook using anaconda version and also installed spark.
+<strong>Now you can run your ML codes.</strong></p>
 
 
   
